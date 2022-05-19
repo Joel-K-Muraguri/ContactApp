@@ -4,6 +4,7 @@
     package="com.joel.contactapp">
 
     <application
+        android:name=".ContactApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"

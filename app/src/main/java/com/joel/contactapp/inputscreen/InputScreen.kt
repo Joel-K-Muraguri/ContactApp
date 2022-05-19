@@ -1,11 +1,12 @@
 package com.joel.contactapp.inputscreen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -13,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -48,15 +50,13 @@ fun InputScreenAppBar(
         },
         title = { Text(text = "Create Contact")},
         actions = {
-            Button(onClick = { /*TODO*/ }) {
+            Button(
+                onClick = { /*TODO*/ },
+                shape = RoundedCornerShape(20.dp)
+            ) {
                 Text(
                     text = "Save",
-                    modifier = Modifier
-                        .background(
-                            color = Color.Blue,
-                            shape = RoundedCornerShape(20.dp))
                 )
-
             }
         }
     )
@@ -78,7 +78,6 @@ fun InputScreenTextField(){
     }
 
     Column (
-
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
             ){
@@ -94,7 +93,13 @@ fun InputScreenTextField(){
            value = phoneNumber ,
            onValueChange = {phoneNumber = it},
            shape = RoundedCornerShape(20.dp),
-           label = { Text(text = "Phone Number")}
+           label = { Text(text = "Phone Number")},
+           keyboardActions = KeyboardActions {
+
+           },
+           keyboardOptions = KeyboardOptions(
+               keyboardType = KeyboardType.Phone
+           )
        )
     }
 }
