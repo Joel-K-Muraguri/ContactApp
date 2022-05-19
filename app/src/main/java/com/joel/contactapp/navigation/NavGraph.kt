@@ -4,19 +4,22 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.joel.contactapp.contactlistscreen.ContactScreen
 import com.joel.contactapp.inputscreen.InputScreen
-import com.joel.contactapp.listscreen.ContactScreen
+
 
 @Composable
-fun NavGraph(
+fun Navigation(
     navController: NavHostController
 ){
-    NavHost(navController = navController, startDestination = AppBarScreens.Contacts.route){
-        composable(route = AppBarScreens.Contacts.route){
-            ContactScreen()
+    NavHost(navController = navController,
+        startDestination = Routes.Contacts.routes){
+        composable(route = Routes.Contacts.routes){
+            ContactScreen(navController)
         }
-        composable(route = AppBarScreens.FixAndMerge.route){
-            InputScreen()
+        composable(route = Routes.Input.routes){
+            InputScreen(navController)
         }
     }
+
 }

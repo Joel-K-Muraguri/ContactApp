@@ -15,12 +15,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.joel.contactapp.navigation.Routes
 
 @Composable
-fun InputScreen() {
+fun InputScreen(
+    navController: NavHostController
+) {
     Scaffold(
         topBar = {
-            InputScreenAppBar()
+            InputScreenAppBar(navController = navController)
         }
     ) {
         InputScreenTextField()
@@ -28,11 +33,15 @@ fun InputScreen() {
 }
 
 @Composable
-fun InputScreenAppBar(){
+fun InputScreenAppBar(
+    navController: NavHostController
+){
     TopAppBar(
         backgroundColor = Color.White,
         navigationIcon = {
-                         IconButton(onClick = { /*TODO*/ }) {
+                         IconButton(onClick = {
+                             navController.navigate(Routes.Contacts.routes)
+                         }) {
                            Icon(imageVector = Icons.Filled.Close,
                                contentDescription = "Close")
                          }
@@ -47,6 +56,7 @@ fun InputScreenAppBar(){
                             color = Color.Blue,
                             shape = RoundedCornerShape(20.dp))
                 )
+
             }
         }
     )
@@ -68,9 +78,9 @@ fun InputScreenTextField(){
     }
 
     Column (
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
 
+        verticalArrangement = Arrangement.SpaceBetween,
+        horizontalAlignment = Alignment.CenterHorizontally
             ){
         OutlinedTextField(
             value = name,
@@ -92,5 +102,6 @@ fun InputScreenTextField(){
 @Preview(showBackground = true)
 @Composable
 fun InputScreenPreview(){
-    InputScreen()
+    val navController = rememberNavController()
+    InputScreen(navController)
 }
