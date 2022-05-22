@@ -14,11 +14,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.joel.contactapp.R
 import com.joel.contactapp.navigation.Routes
 
 @Composable
@@ -39,6 +42,7 @@ fun InputScreenAppBar(
     navController: NavHostController
 ){
     TopAppBar(
+
         backgroundColor = Color.White,
         navigationIcon = {
                          IconButton(onClick = {
@@ -57,6 +61,13 @@ fun InputScreenAppBar(
                 Text(
                     text = "Save",
                 )
+            }
+            IconButton(
+                onClick = { /*TODO*/ },
+                ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_drop_down_24),
+                    contentDescription = stringResource(id = R.string.drop_down) )
             }
         }
     )

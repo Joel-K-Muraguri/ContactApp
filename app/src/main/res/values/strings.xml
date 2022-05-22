@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ContactApp</string>
     <string name="add_contacts">Add Contacts</string>
+    <string name="drop_down">Drop Down</string>
 </resources>
