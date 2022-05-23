@@ -1,7 +1,9 @@
 package com.joel.contactapp.contactlistscreen
 
-sealed class ContactEvent(){
-    object OnContactClick : ContactEvent()
-    object OnNavigate : ContactEvent()
+import com.joel.contactapp.data.Contact
+
+sealed class ContactEvent {
+    data class OnContactClick (val contact: Contact) : ContactEvent()
+    object OnAddScreenNavigate : ContactEvent()
 
 }

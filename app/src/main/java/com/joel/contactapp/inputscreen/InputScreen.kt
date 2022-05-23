@@ -23,101 +23,87 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.joel.contactapp.R
 import com.joel.contactapp.navigation.Routes
+import com.joel.contactapp.util.UiEvent
+import kotlinx.coroutines.flow.collect
 
 @Composable
 fun InputScreen(
-    navController: NavHostController
+    mViewModel: InputViewModel,
+    onPopBackStack : () -> Unit
+
 ) {
+    LaunchedEffect(key1 = true){
+        mViewModel.uiEvent.collect { event ->
+            when(event){
+                is UiEvent.PopBackStack  -> onPopBackStack()
+                else -> Unit
+            }
+        }
+    }
+
+
     Scaffold(
         topBar = {
-            InputScreenAppBar(navController = navController)
+            TopAppBar(
+
+                backgroundColor = Color.White,
+                navigationIcon = {
+                    IconButton(onClick = {
+                        mViewModel.onEvent(InputEvents.OnTodoListScreen)
+                    }) {
+                        Icon(imageVector = Icons.Filled.Close,
+                            contentDescription = "Close")
+                    }
+                },
+                title = { Text(text = "Create Contact")},
+                actions = {
+                    Button(
+                        onClick = {
+                            mViewModel.onEvent(InputEvents.OnSaveContact) },
+                        shape = RoundedCornerShape(20.dp)
+                    ) {
+                        Text(
+                            text = "Save",
+                        )
+                    }
+                    IconButton(
+                        onClick = { /*TODO*/ },
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_drop_down_24),
+                            contentDescription = stringResource(id = R.string.drop_down) )
+                    }
+                }
+            )
         }
     ) {
-        InputScreenTextField()
-    }
-}
+        Column (
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            OutlinedTextField(
+                value = mViewModel.name,
+                onValueChange = {
+                                mViewModel.onEvent(InputEvents.OnNameChange(it))
+                },
+                shape = RoundedCornerShape(20.dp),
+                label = { Text(text = "Name")}
+            )
+            Spacer(modifier = Modifier.height(20.dp))
 
-@Composable
-fun InputScreenAppBar(
-    navController: NavHostController
-){
-    TopAppBar(
-
-        backgroundColor = Color.White,
-        navigationIcon = {
-                         IconButton(onClick = {
-                             navController.navigate(Routes.Contacts.routes)
-                         }) {
-                           Icon(imageVector = Icons.Filled.Close,
-                               contentDescription = "Close")
-                         }
-        },
-        title = { Text(text = "Create Contact")},
-        actions = {
-            Button(
-                onClick = { /*TODO*/ },
-                shape = RoundedCornerShape(20.dp)
-            ) {
-                Text(
-                    text = "Save",
+            OutlinedTextField(
+                value = mViewModel.phoneNumber ,
+                onValueChange = {
+                                mViewModel.onEvent(InputEvents.OnPhoneNumberChange(it))
+                },
+                shape = RoundedCornerShape(20.dp),
+                label = { Text(text = "Phone Number")},
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Phone
                 )
-            }
-            IconButton(
-                onClick = { /*TODO*/ },
-                ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_drop_down_24),
-                    contentDescription = stringResource(id = R.string.drop_down) )
-            }
+            )
         }
-    )
-}
-
-/*@Preview(showBackground = true)
-@Composable
-fun InputScreenAppBarPreview(){
-    InputScreenAppBar()
-}*/
-
-@Composable
-fun InputScreenTextField(){
-    var name by remember {
-        mutableStateOf("")
-    }
-    var phoneNumber by remember {
-        mutableStateOf("")
-    }
-
-    Column (
-        verticalArrangement = Arrangement.SpaceBetween,
-        horizontalAlignment = Alignment.CenterHorizontally
-            ){
-        OutlinedTextField(
-            value = name,
-            onValueChange = { name = it },
-            shape = RoundedCornerShape(20.dp),
-            label = { Text(text = "Name")}
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-
-       OutlinedTextField(
-           value = phoneNumber ,
-           onValueChange = {phoneNumber = it},
-           shape = RoundedCornerShape(20.dp),
-           label = { Text(text = "Phone Number")},
-           keyboardActions = KeyboardActions {
-
-           },
-           keyboardOptions = KeyboardOptions(
-               keyboardType = KeyboardType.Phone
-           )
-       )
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun InputScreenPreview(){
-    val navController = rememberNavController()
-    InputScreen(navController)
-}
+

@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ContactViewModel @Inject constructor(
-    private val repository: Repository
+   repository: Repository
 ) :ViewModel() {
 
     val contacts = repository.getAllContacts()
@@ -25,9 +25,9 @@ class ContactViewModel @Inject constructor(
     fun onEvent(event : ContactEvent){
         when(event){
             is ContactEvent.OnContactClick -> {
-                sendUiEvent(UiEvent.Navigate(EDIT_CONTACT_SCREEN))
+                sendUiEvent(UiEvent.Navigate(EDIT_CONTACT_SCREEN + "?todoId=${event.contact.id}"))
             }
-            is ContactEvent.OnNavigate -> {
+            is ContactEvent.OnAddScreenNavigate -> {
                 sendUiEvent(UiEvent.Navigate(ADD_CONTACT_SCREEN))
             }
         }
